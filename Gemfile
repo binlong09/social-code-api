@@ -20,6 +20,9 @@ gem 'jwt'
 # Rendering
 gem 'active_model_serializers', '~> 0.10.10'
 
+# Paginate
+gem 'kaminari'
+
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 

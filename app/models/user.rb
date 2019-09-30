@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   has_secure_password
 
-  EMAIL_REGEX = %r{\A[a-z][a-z0-9_\.]{3,32}@gettysburg.edu\z}
+  EMAIL_REGEX = %r{\A[A-Z][a-z][a-z0-9_\.]{3,32}@gettysburg.edu\z}
 
   validates :email, presence: true, uniqueness: true
   # validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
@@ -9,6 +9,5 @@ class User < ApplicationRecord
   validates :password,
             length: { minimum: 6 },
             if: -> { new_record? || !password.nil? }
-
 
 end
