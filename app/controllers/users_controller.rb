@@ -10,7 +10,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    render json: @user, except: [:password_digest], status: :ok
+    render json: @user, status: :ok
   end
 
   def create
