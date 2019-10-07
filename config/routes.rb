@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       root to: "study_groups#index"
     end
   resources :users
+  resources :study_groups
   post 'auth/login', to: 'authentication#login'
   get '/*a', to: 'application#not_found'
 end
