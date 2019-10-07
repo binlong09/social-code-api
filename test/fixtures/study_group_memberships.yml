@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  study_group_id: one
+  user_id: one
+  role: 1
+
+two:
+  study_group_id: two
+  user_id: two
+  role: 1

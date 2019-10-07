@@ -8,7 +8,7 @@ class AuthenticationController < ApplicationController
     if @user&.authenticate(params[:password])
       send_token
     else
-      render json: { error: 'unauthorized' }, status: :unauthorized
+      render json: { error: 'Wrong email or password. Try again!' }, status: :unauthorized
     end
   end
 

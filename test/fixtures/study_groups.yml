@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  class_code: MyString
+  class_name: MyString
+  location: MyString
+  semester: 1
+  meeting_time: 2019-09-30 13:56:12
+  professor_name: MyString
+  going_count: 1
+  photo_url: MyString
+
+two:
+  class_code: MyString
+  class_name: MyString
+  location: MyString
+  semester: 1
+  meeting_time: 2019-09-30 13:56:12
+  professor_name: MyString
+  going_count: 1
+  photo_url: MyString
