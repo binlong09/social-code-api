@@ -28,3 +28,4 @@ latest*.dump*
 erd.pdf
 /.vscode
 .ruby-gemset
+.env

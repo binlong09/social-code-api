@@ -6,6 +6,7 @@ class UsersController < ApplicationController
 
   def index
     @users = User.page(params[:page]).per(params[:limit])
+    authorize @users
     render json: @users, meta: meta_attributes(@users), meta_key: 'pages',
            root: 'users', status: :ok
   end

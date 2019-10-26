@@ -1,4 +1,12 @@
 class ApplicationController < ActionController::API
+  include Pundit
+
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
+  attr_reader :current_user
+
+  serialization_scope :current_user
+
   def not_found
     render json: { error: 'not_found' }
   end
@@ -24,5 +32,12 @@ class ApplicationController < ActionController::API
       total_pages_count: collection.total_pages,
       total_count: collection.total_count
     }.merge(extra_meta)
+  end
+
+  private
+
+  def user_not_authorized(exception)
+    policy_name = exception.policy.class.to_s.underscore
+    render json: { error: "unauthorized access" }, status: :unauthorized
   end
 end

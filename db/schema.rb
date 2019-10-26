@@ -10,17 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_02_001700) do
+ActiveRecord::Schema.define(version: 2019_10_19_225433) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "professors", force: :cascade do |t|
-    t.string "name"
-    t.string "year"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "study_group_memberships", force: :cascade do |t|
     t.bigint "study_group_id"
@@ -35,13 +28,13 @@ ActiveRecord::Schema.define(version: 2019_10_02_001700) do
 
   create_table "study_groups", force: :cascade do |t|
     t.string "class_code"
-    t.string "class_name"
+    t.string "study_group_name"
     t.string "location"
     t.integer "semester"
     t.datetime "meeting_time"
     t.string "professor_name"
-    t.integer "going_count"
-    t.string "photo_url"
+    t.integer "going_count", default: 0
+    t.string "image_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
