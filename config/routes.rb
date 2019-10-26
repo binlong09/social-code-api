@@ -2,9 +2,9 @@ Rails.application.routes.draw do
   namespace :admin do
       resources :study_groups
       resources :study_group_memberships
-      resources :users
+      resources :users, only: %i(index show new create edit update destroy)
 
-      root to: "study_groups#index"
+      root to: "users#index"
     end
   resources :users
   resources :study_groups
