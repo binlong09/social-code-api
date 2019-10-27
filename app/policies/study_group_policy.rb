@@ -6,18 +6,32 @@ class StudyGroupPolicy < ApiPolicy
   end
 
   def show?
-    true
+    @user.present?
   end
 
   def create?
-    true
+    @user.present?
   end
 
   def destroy?
-    false
+    owner?
   end
 
   def update?
-    self?
+    owner?
+  end
+
+  def going?
+    @user.present?
+  end
+
+  def not_going?
+    @user.present?
+  end
+
+  private
+
+  def owner?
+    record.owners.pluck(:user_id).include? user.id
   end
 end

@@ -5,7 +5,6 @@ class User < ApplicationRecord
 
   validates :email, presence: true, uniqueness: true
   has_many :study_group_memberships
-  # validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :email, format: { with: EMAIL_REGEX }
   validates :password,
             length: { minimum: 6 },

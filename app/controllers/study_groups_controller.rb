@@ -2,6 +2,7 @@
 
 class StudyGroupsController < ApplicationController
   before_action :authorize_request
+  before_action :find_study_group, only: [:show, :update, :going, :not_going]
 
   def index
     @study_groups = StudyGroup.page(params[:page]).per(params[:limit])
@@ -24,6 +25,35 @@ class StudyGroupsController < ApplicationController
     end
   end
 
+  def update
+    authorize @study_group
+    if @study_group.update(study_group_params)
+      render json: @study_group, status: :ok
+    else
+      render json: { errors: @study_group.errors.message }, status: :unprocessable_entity
+    end
+  end
+
+  def going
+    authorize @study_group
+    service = StudyGroups::AttendanceUpdateService.new(current_user, true, @study_group)
+    if service.call
+      head :no_content
+    else
+      render json: { errors: service.errors.messages }, status: :unprocessable_entity
+    end
+  end
+
+  def not_going
+    authorize @study_group
+    service = StudyGroups::AttendanceUpdateService.new(current_user, false, @study_group)
+    if service.call
+      head :no_content
+    else
+      render json: { errors: service.errors.messages }, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def find_study_group
@@ -39,7 +69,7 @@ class StudyGroupsController < ApplicationController
       :meeting_time,
       :professor_name,
       :going_count,
-      :photo_url
+      :image_url
     )
   end
 end
