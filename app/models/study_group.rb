@@ -5,4 +5,5 @@ class StudyGroup < ApplicationRecord
     fall_2019: 0,
     spring_2020: 1
   }
+
 end

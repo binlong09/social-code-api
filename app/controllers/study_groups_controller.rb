@@ -5,8 +5,9 @@ class StudyGroupsController < ApplicationController
 
   def index
     @study_groups = StudyGroup.page(params[:page]).per(params[:limit])
+    authorize @study_groups
     render json: @study_groups, meta: meta_attributes(@study_groups), meta_key: 'pages',
-           root: 'study_groups', status: :ok
+           root: 'study_groups', inlcude: ['study_group_membership'], status: :ok
   end
 
   def show
@@ -14,14 +15,13 @@ class StudyGroupsController < ApplicationController
   end
 
   def create
-    @study_group = StudyGroup.new(study_group_params)
-    if @study_group.save
-      render json: @study_group, status: :created
+    authorize StudyGroup
+    service = StudyGroups::CreateService.new(current_user, study_group_params)
+    if service.call
+      render json: service.study_group, status: :create
     else
-      render json: { errors: @study_group.errors.full_message },
-             status: :unprocessable_entity
+      render json: { errors: service.errors.message }, status: :unprocessable_entity
     end
-
   end
 
   private
@@ -33,7 +33,7 @@ class StudyGroupsController < ApplicationController
   def study_group_params
     params.permit(
       :class_code,
-      :class_name,
+      :study_group_name,
       :location,
       :semester,
       :meeting_time,
