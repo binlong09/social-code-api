@@ -5,14 +5,20 @@ Rails.application.routes.draw do
       resources :users, only: %i(index show new create edit update destroy)
 
       root to: "users#index"
-    end
+  end
+  resources :study_group_comments, only: [:update, :destroy]
+  resources :study_group_posts, only: [:update, :show, :destroy] do
+    resources :study_group_comments, only: [:create]
+  end
   resources :users
   resources :study_groups do
+    resources :study_group_posts, only: [:create, :index]
     member do
       get :going
       get :not_going
     end
   end
+
   post 'auth/login', to: 'authentication#login'
   get '/*a', to: 'application#not_found'
 end

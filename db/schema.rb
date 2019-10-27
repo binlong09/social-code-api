@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_19_225433) do
+ActiveRecord::Schema.define(version: 2019_10_27_080755) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "study_group_comments", force: :cascade do |t|
+    t.text "content", null: false
+    t.string "image_url"
+    t.bigint "study_group_post_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["study_group_post_id"], name: "index_study_group_comments_on_study_group_post_id"
+    t.index ["user_id"], name: "index_study_group_comments_on_user_id"
+  end
 
   create_table "study_group_memberships", force: :cascade do |t|
     t.bigint "study_group_id"
@@ -24,6 +35,18 @@ ActiveRecord::Schema.define(version: 2019_10_19_225433) do
     t.index ["study_group_id", "user_id"], name: "index_study_group_memberships_on_study_group_id_and_user_id", unique: true
     t.index ["study_group_id"], name: "index_study_group_memberships_on_study_group_id"
     t.index ["user_id"], name: "index_study_group_memberships_on_user_id"
+  end
+
+  create_table "study_group_posts", force: :cascade do |t|
+    t.bigint "study_group_id"
+    t.bigint "user_id"
+    t.text "content", null: false
+    t.string "image_url"
+    t.integer "comments_count", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["study_group_id"], name: "index_study_group_posts_on_study_group_id"
+    t.index ["user_id"], name: "index_study_group_posts_on_user_id"
   end
 
   create_table "study_groups", force: :cascade do |t|
@@ -51,6 +74,10 @@ ActiveRecord::Schema.define(version: 2019_10_19_225433) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "study_group_comments", "study_group_posts"
+  add_foreign_key "study_group_comments", "users"
   add_foreign_key "study_group_memberships", "study_groups"
   add_foreign_key "study_group_memberships", "users"
+  add_foreign_key "study_group_posts", "study_groups"
+  add_foreign_key "study_group_posts", "users"
 end

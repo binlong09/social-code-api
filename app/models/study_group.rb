@@ -1,5 +1,6 @@
 class StudyGroup < ApplicationRecord
   has_many :study_group_memberships
+  has_many :study_group_posts
 
   enum semester: {
     fall_2019: 0,

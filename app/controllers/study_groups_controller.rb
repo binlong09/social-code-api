@@ -8,11 +8,12 @@ class StudyGroupsController < ApplicationController
     @study_groups = StudyGroup.page(params[:page]).per(params[:limit])
     authorize @study_groups
     render json: @study_groups, meta: meta_attributes(@study_groups), meta_key: 'pages',
-           root: 'study_groups', inlcude: ['study_group_membership'], status: :ok
+           root: 'study_groups', inlcude: ['study_group_membership'],
+           each_serializer: StudyGroup::IndexSerializer, status: :ok
   end
 
   def show
-    render json: @study_group, status: :ok
+    render json: @study_group, serializer: StudyGroup::ShowSerializer, status: :ok
   end
 
   def create
