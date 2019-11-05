@@ -11,7 +11,8 @@ class StudyGroup::IndexSerializer < ApplicationSerializer
              :going_count,
              :image_url,
              :going,
-             :owned
+             :owned,
+             :created_at
 
   def going
     if object.study_group_memberships.find_by(user_id: current_user.id).present?
