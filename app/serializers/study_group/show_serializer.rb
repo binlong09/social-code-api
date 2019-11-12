@@ -31,4 +31,8 @@ class StudyGroup::ShowSerializer < ApplicationSerializer
       false
     end
   end
+
+  def meeting_time
+    object.meeting_time.strftime("%A %m/%d/%Y %I:%M%p")
+  end
 end

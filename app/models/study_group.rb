@@ -1,6 +1,10 @@
 class StudyGroup < ApplicationRecord
+  default_scope { order("created_at DESC") }
+
   has_many :study_group_memberships
   has_many :study_group_posts
+
+  validates :meeting_time, :study_group_name, :class_code, presence: true
 
   enum semester: {
     fall_2019: 0,

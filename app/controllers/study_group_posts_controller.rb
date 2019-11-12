@@ -2,7 +2,7 @@
 
 class StudyGroupPostsController < ApplicationController
   before_action :authorize_request
-  before_action :find_study_group, only: [:index]
+  before_action :find_study_group, only: [:index, :create]
   before_action :find_post, only: [:update, :destroy, :show]
 
   def index
@@ -20,7 +20,7 @@ class StudyGroupPostsController < ApplicationController
     authorize StudyGroupPost
     @study_group_post = @study_group.study_group_posts.build(post_params.merge(user: current_user))
     if @study_group_post.save
-      render json: @study_group_post, status: :create
+      render json: @study_group_post, status: :created
     else
       render json: { errors: @study_group_post.errors.full_message },
              status: :unprocessable_entity

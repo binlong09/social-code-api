@@ -29,4 +29,8 @@ class StudyGroup::IndexSerializer < ApplicationSerializer
       false
     end
   end
+
+  def meeting_time
+    object.meeting_time.strftime("%A %I:%M%p")
+  end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_27_080755) do
+ActiveRecord::Schema.define(version: 2019_11_12_000824) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,11 +50,11 @@ ActiveRecord::Schema.define(version: 2019_10_27_080755) do
   end
 
   create_table "study_groups", force: :cascade do |t|
-    t.string "class_code"
-    t.string "study_group_name"
+    t.string "class_code", null: false
+    t.string "study_group_name", null: false
     t.string "location"
-    t.integer "semester"
-    t.datetime "meeting_time"
+    t.integer "semester", default: 0
+    t.datetime "meeting_time", null: false
     t.string "professor_name"
     t.integer "going_count", default: 0
     t.string "image_url"
@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(version: 2019_10_27_080755) do
     t.string "major"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "avatar_url"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

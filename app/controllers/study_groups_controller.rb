@@ -5,7 +5,7 @@ class StudyGroupsController < ApplicationController
   before_action :find_study_group, only: [:show, :update, :going, :not_going]
 
   def index
-    @study_groups = StudyGroup.page(params[:page]).per(params[:limit])
+    @study_groups = StudyGroup.includes(:study_group_memberships).page(params[:page]).per(params[:limit])
     authorize @study_groups
     render json: @study_groups, meta: meta_attributes(@study_groups), meta_key: 'pages',
            root: 'study_groups', inlcude: ['study_group_membership'],
@@ -20,18 +20,18 @@ class StudyGroupsController < ApplicationController
     authorize StudyGroup
     service = StudyGroups::CreateService.new(current_user, study_group_params)
     if service.call
-      render json: service.study_group, status: :create
+      render json: service.study_group, serializer: StudyGroup::ShowSerializer, status: :created
     else
-      render json: { errors: service.errors.message }, status: :unprocessable_entity
+      render json: { errors: service.errors.messages }, status: :unprocessable_entity
     end
   end
 
   def update
     authorize @study_group
     if @study_group.update(study_group_params)
-      render json: @study_group, status: :ok
+      render json: @study_group, serializer: StudyGroup::ShowSerializer, status: :ok
     else
-      render json: { errors: @study_group.errors.message }, status: :unprocessable_entity
+      render json: { errors: @study_group.errors.messages }, status: :unprocessable_entity
     end
   end
 
