@@ -18,11 +18,11 @@ class StudyGroupPostsController < ApplicationController
 
   def create
     authorize StudyGroupPost
-    @study_group_post = @study_group.study_group_posts.build(post_params.merge(user: current_user))
+    @study_group_post = @study_group.study_group_posts.new(post_params.merge(user: current_user))
     if @study_group_post.save
       render json: @study_group_post, status: :created
     else
-      render json: { errors: @study_group_post.errors.full_message },
+      render json: { errors: @study_group_post.errors.messages },
              status: :unprocessable_entity
     end
   end
