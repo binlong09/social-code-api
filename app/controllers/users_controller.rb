@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :authorize_request, except: :create
-  before_action :find_user, except: %i[create index]
+  before_action :authorize_request, only: %i[index update destroy show]
+  before_action :find_user, except: %i[create index recover_password]
 
   def index
     @users = User.page(params[:page]).per(params[:limit])
@@ -38,6 +38,16 @@ class UsersController < ApplicationController
 
     render json: { errors: @user.errors.full_messages },
            status: :unprocessable_entity
+  end
+
+  def recover_password
+    @user = User.find_by_email(params[:email])
+    if @user.present?
+      @user.send_reset_password_instructions
+      head :no_content
+    else
+      render json: { error: 'Email address does not exist' }, status: :unprocessable_entity
+    end
   end
 
   private

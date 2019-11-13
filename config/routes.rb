@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  devise_for :users
+
   namespace :admin do
       resources :study_groups
       resources :study_group_memberships
@@ -10,7 +12,11 @@ Rails.application.routes.draw do
   resources :study_group_posts, only: [:update, :show, :destroy] do
     resources :study_group_comments, only: [:create]
   end
-  resources :users
+  resources :users do
+    collection do
+      get :recover_password
+    end
+  end
   resources :study_groups do
     resources :study_group_posts, only: [:create, :index]
     member do
