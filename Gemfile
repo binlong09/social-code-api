@@ -16,6 +16,7 @@ gem 'puma', '~> 3.11'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 gem 'jwt'
+gem 'devise'
 
 # Authorization
 gem 'pundit'
@@ -50,6 +51,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'dotenv-rails'
+  gem "letter_opener"
 end
 
 

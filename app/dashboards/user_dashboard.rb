@@ -11,7 +11,6 @@ class UserDashboard < Administrate::BaseDashboard
     id: Field::Number,
     name: Field::String,
     email: Field::String,
-    password_digest: Field::String,
     phone_number: Field::String,
     graduation_date: Field::DateTime,
     major: Field::String,
@@ -38,7 +37,6 @@ class UserDashboard < Administrate::BaseDashboard
     :id,
     :name,
     :email,
-    :password_digest,
     :phone_number,
     :graduation_date,
     :major,
@@ -52,7 +50,6 @@ class UserDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :name,
     :email,
-    :password_digest,
     :phone_number,
     :graduation_date,
     :major,
