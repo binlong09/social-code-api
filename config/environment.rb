@@ -9,7 +9,7 @@ ActionMailer::Base.smtp_settings = {
   :password => ENV.fetch("SENDGRID_PASSWORD"),
   :domain => 'social-code.com',
   :address => 'smtp.sendgrid.net',
-  :port => 465,
+  :port => 587,
   :authentication => :plain,
   :enable_starttls_auto => true
 }
