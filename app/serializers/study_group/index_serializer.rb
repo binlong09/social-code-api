@@ -11,6 +11,7 @@ class StudyGroup::IndexSerializer < ApplicationSerializer
              :going_count,
              :image_url,
              :going,
+             :post_count,
              :owned,
              :created_at
 
