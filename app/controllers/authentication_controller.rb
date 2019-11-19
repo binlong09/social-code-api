@@ -2,16 +2,16 @@
 
 class AuthenticationController < ApplicationController
   def login
-    @user = User.find_by_email(params[:email])
+    @user = User.find_by_email(params[:email].downcase)
 
-    if !@user&.confirmed?
-      render json: { error: 'Please check your mailbox for confirmation email '}, status: :unauthorized
+    if !@user.present?
+      render json: { error: 'Account with associated email does not exist'}, status: :unauthorized
+    elsif !@user&.confirmed?
+      render json: { error: 'Please check your mailbox for confirmation link'}, status: :unauthorized
+    elsif @user&.authenticate(params[:password])
+      send_token
     else
-      if @user&.authenticate(params[:password])
-        send_token
-      else
-        render json: { error: 'Wrong email or password. Try again!' }, status: :unauthorized
-      end
+      render json: { error: 'Wrong email or password. Try again!' }, status: :unauthorized
     end
   end
 

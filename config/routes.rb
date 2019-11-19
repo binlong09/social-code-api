@@ -9,8 +9,8 @@ Rails.application.routes.draw do
       root to: "users#index"
   end
   resources :study_group_comments, only: [:update, :destroy]
-  resources :study_group_posts, only: [:update, :show, :destroy] do
-    resources :study_group_comments, only: [:create]
+  resources :study_group_posts, only: [:update, :destroy] do
+    resources :study_group_comments, only: [:create, :index]
   end
   resources :users do
     collection do

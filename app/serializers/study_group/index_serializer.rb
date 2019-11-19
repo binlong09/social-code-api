@@ -33,4 +33,12 @@ class StudyGroup::IndexSerializer < ApplicationSerializer
   def meeting_time
     object.meeting_time.strftime("%A %I:%M%p")
   end
+
+  def going_count
+    if object.going_count == 0
+      return 0
+    else
+      return object.going_count - 1
+    end
+  end
 end
