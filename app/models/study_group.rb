@@ -4,6 +4,7 @@ class StudyGroup < ApplicationRecord
   has_many :study_group_memberships, dependent: :destroy
   has_many :study_group_posts, dependent: :destroy
   has_many :study_group_bookmarks, dependent: :destroy
+  has_many :study_group_comments, dependent: :destroy
 
   validates :meeting_time, :study_group_name, :class_code, presence: true
 

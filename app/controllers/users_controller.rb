@@ -39,7 +39,7 @@ class UsersController < ApplicationController
   end
 
   def recover_password
-    @user = User.find_by_email(params[:email])
+    @user = User.find_by_email(params[:email].downcase)
     if @user.present?
       @user.send_reset_password_instructions
       head :no_content
