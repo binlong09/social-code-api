@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_19_213940) do
+ActiveRecord::Schema.define(version: 2019_11_19_235421) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "study_group_bookmarks", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "study_group_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["study_group_id"], name: "index_study_group_bookmarks_on_study_group_id"
+    t.index ["user_id"], name: "index_study_group_bookmarks_on_user_id"
+  end
 
   create_table "study_group_comments", force: :cascade do |t|
     t.text "content", null: false
@@ -61,6 +70,7 @@ ActiveRecord::Schema.define(version: 2019_11_19_213940) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "post_count", default: 0
+    t.integer "bookmark_count", default: 0
   end
 
   create_table "users", force: :cascade do |t|
@@ -83,6 +93,8 @@ ActiveRecord::Schema.define(version: 2019_11_19_213940) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "study_group_bookmarks", "study_groups"
+  add_foreign_key "study_group_bookmarks", "users"
   add_foreign_key "study_group_comments", "study_group_posts"
   add_foreign_key "study_group_comments", "users"
   add_foreign_key "study_group_memberships", "study_groups"

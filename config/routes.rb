@@ -22,6 +22,11 @@ Rails.application.routes.draw do
     member do
       get :going
       get :not_going
+      get :create_bookmark
+      get :delete_bookmark
+    end
+    collection do
+      get :search
     end
   end
 

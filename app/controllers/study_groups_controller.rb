@@ -2,7 +2,7 @@
 
 class StudyGroupsController < ApplicationController
   before_action :authorize_request
-  before_action :find_study_group, only: [:show, :update, :going, :not_going]
+  before_action :find_study_group, only: [:show, :update, :going, :not_going, :create_bookmark, :delete_bookmark]
 
   def index
     @study_groups = StudyGroup.includes(:study_group_memberships).page(params[:page]).per(params[:limit])
@@ -53,6 +53,33 @@ class StudyGroupsController < ApplicationController
     else
       render json: { errors: service.errors.messages }, status: :unprocessable_entity
     end
+  end
+
+  def create_bookmark
+    authorize @study_group
+    service = StudyGroups::BookmarkUpdateService.new(current_user, true, @study_group)
+    if service.call
+      head :no_content
+    else
+      render json: { errors: service.errors.messages }, status: :unprocessable_entity
+    end
+  end
+
+  def delete_bookmark
+    authorize @study_group
+    service = StudyGroups::BookmarkUpdateService.new(current_user, false, @study_group)
+    if service.call
+      head :no_content
+    else
+      render json: { errors: service.errors.messages }, status: :unprocessable_entity
+    end
+  end
+
+  def search
+    authorize StudyGroup
+    @study_groups = StudyGroup.search(params[:q])
+    render json: @study_groups, root: 'study_groups', inlcude: ['study_group_membership'],
+           each_serializer: StudyGroup::IndexSerializer, status: :ok
   end
 
   private

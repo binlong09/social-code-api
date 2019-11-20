@@ -9,8 +9,11 @@ class StudyGroup::ShowSerializer < ApplicationSerializer
              :meeting_time,
              :professor_name,
              :going_count,
+             :post_count,
+             :bookmark_count,
              :image_url,
              :going,
+             :bookmarked,
              :owned,
              :created_at
 
@@ -26,6 +29,14 @@ class StudyGroup::ShowSerializer < ApplicationSerializer
 
   def owned
     if object.study_group_memberships.find_by(user_id: current_user, role: :owner).present?
+      true
+    else
+      false
+    end
+  end
+
+  def bookmarked
+    if object.study_group_bookmarks.find_by(user_id: current_user.id).present?
       true
     else
       false

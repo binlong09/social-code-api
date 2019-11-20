@@ -12,6 +12,8 @@ class StudyGroup::IndexSerializer < ApplicationSerializer
              :image_url,
              :going,
              :post_count,
+             :bookmark_count,
+             :bookmarked,
              :owned,
              :created_at
 
@@ -25,6 +27,14 @@ class StudyGroup::IndexSerializer < ApplicationSerializer
 
   def owned
     if object.study_group_memberships.find_by(user_id: current_user, role: :owner).present?
+      true
+    else
+      false
+    end
+  end
+
+  def bookmarked
+    if object.study_group_bookmarks.find_by(user_id: current_user.id).present?
       true
     else
       false

@@ -29,6 +29,18 @@ class StudyGroupPolicy < ApiPolicy
     @user.present?
   end
 
+  def create_bookmark?
+    @user.present?
+  end
+
+  def delete_bookmark?
+    @user.present?
+  end
+
+  def search?
+    @user.present?
+  end
+
   private
 
   def owner?

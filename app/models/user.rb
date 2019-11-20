@@ -13,6 +13,7 @@ class User < ApplicationRecord
   has_many :study_group_memberships
   has_many :study_group_posts
   has_many :study_group_comments
+  has_many :study_group_bookmarks
 
   def encrypted_password
     password_digest
