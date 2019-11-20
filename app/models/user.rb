@@ -17,5 +17,17 @@ class User < ApplicationRecord
 
   def encrypted_password
     password_digest
-   end
+  end
+
+  def bookmarked_study_groups
+    StudyGroup.where(id: study_group_bookmarks.select(:study_group_id))
+  end
+
+  def going_study_groups
+    StudyGroup.where(id: study_group_memberships.select(:study_group_id))
+  end
+
+  def created_study_groups
+    StudyGroup.where(id: study_group_memberships.owner.select(:study_group_id))
+  end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_19_235421) do
+ActiveRecord::Schema.define(version: 2019_11_20_042802) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 2019_11_19_235421) do
     t.bigint "study_group_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["study_group_id", "user_id"], name: "index_study_group_bookmarks_on_study_group_id_and_user_id", unique: true
     t.index ["study_group_id"], name: "index_study_group_bookmarks_on_study_group_id"
     t.index ["user_id"], name: "index_study_group_bookmarks_on_user_id"
   end
@@ -78,7 +79,7 @@ ActiveRecord::Schema.define(version: 2019_11_19_235421) do
     t.string "email"
     t.string "password_digest"
     t.string "phone_number"
-    t.date "graduation_date"
+    t.string "graduation_date"
     t.string "major"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

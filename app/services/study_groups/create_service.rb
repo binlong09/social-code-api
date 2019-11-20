@@ -30,7 +30,7 @@ module StudyGroups
     def create_study_group_membership
       study_group_membership = current_user.study_group_memberships.build(
         study_group: study_group,
-        role: 0,
+        role: 1,
       )
       study_group_membership.save
     end

@@ -2,16 +2,14 @@
 
 class UsersController < ApplicationController
   before_action :authorize_request, only: %i[index update destroy show]
-  before_action :find_user, except: %i[create index recover_password]
+  before_action :find_user, except: %i[create index recover_password show]
 
   def index
-    @users = User.page(params[:page]).per(params[:limit])
-    authorize @users
-    render json: @users, meta: meta_attributes(@users), meta_key: 'pages',
-           root: 'users', status: :ok
+    render json: @current_user, status: :ok
   end
 
   def show
+    @user = User.includes(:study_group_memberships, :study_group_bookmarks).find(params[:id])
     render json: @user, status: :ok
   end
 
@@ -58,7 +56,7 @@ class UsersController < ApplicationController
 
   def user_params
     params.permit(
-      :name, :email, :password, :phone_number, :graduation_date, :major
+      :name, :email, :password, :phone_number, :graduation_date, :major, :avatar_url
     )
   end
 end
