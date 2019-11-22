@@ -7,6 +7,7 @@ class StudyGroup::ShowSerializer < ApplicationSerializer
              :location,
              :semester,
              :meeting_time,
+             :origin_meeting_time,
              :professor_name,
              :going_count,
              :post_count,
@@ -28,7 +29,7 @@ class StudyGroup::ShowSerializer < ApplicationSerializer
   end
 
   def owned
-    if object.study_group_memberships.find_by(user_id: current_user, role: :owner).present?
+    if object.study_group_memberships.find_by(user_id: current_user.id, role: :owner).present?
       true
     else
       false
@@ -45,5 +46,9 @@ class StudyGroup::ShowSerializer < ApplicationSerializer
 
   def meeting_time
     object.meeting_time.strftime("%A %m/%d/%Y %I:%M%p")
+  end
+
+  def origin_meeting_time
+    object.meeting_time.strftime("%B %dth %Y, %I:%M%p")
   end
 end

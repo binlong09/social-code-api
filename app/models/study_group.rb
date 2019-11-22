@@ -14,7 +14,7 @@ class StudyGroup < ApplicationRecord
   }
 
   def owners
-    StudyGroupMembership.where(role: 0, study_group_id: self.id)
+    StudyGroupMembership.where(role: 1, study_group_id: self.id)
   end
 
   def self.search(search)
