@@ -30,4 +30,15 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  en:
+  activerecord:
+    attributes:
+      user:
+        email: "E-mail address"
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              blank: "is required"
+              invalid: "has to end with @gettysburg.edu"
